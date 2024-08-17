@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
+import { timeInterval } from 'rxjs';
+import { HomeServiceService } from '../../services/home-service.service';
 
 @Component({
   selector: 'app-home',
@@ -9,5 +11,15 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  name = "Leaarning angular"
+  count = signal(0)
+  clickFunction(){
+    var clickTimes = this.count.update(value => value+1)
+    console.log("Btn clicked: " + clickTimes + " times");
+    
+  }
 
+  constructor(private homeService: HomeServiceService){
+    this.homeService.getTodo().subscribe()
+  }
 }
